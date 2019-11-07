@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +15,18 @@
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+/**
+ * @brief Displays a page focused on the specific restaurant at hand
+ */
+Route::get('/restaurant/{name}', function ($name) {
+	return 'restaurant '.$name;
+});
+
+/**
+ * Generic success page.
+ */
+Route::get('/success', function (Request $request) {
+	return view('success', ['msg' => $request->input('msg')]);
 });
