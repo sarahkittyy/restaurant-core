@@ -16,12 +16,17 @@
 				align-items: center;
 				display: flex;
 				justify-content: center;
+				width: 100%;
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
 			}
 		</style>
 	<head>
 		
 	<body>
-		<div class="center">
+		<div class="vertical-center center ">
 			<p class="text">API v1.0.0</p>
 		</div>
 	</body>
