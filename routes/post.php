@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
  * @brief Endpoints for uploading new objects to the server.
  */
 function posts() {
+	/// Restaurant upload endpoint
 	Route::post('/restaurant', function (Request $request) {
 		/**
 		 * name -> required, len > 3
@@ -19,6 +20,7 @@ function posts() {
 		]);
 
 		if ($validator->fails()) {
+			// Failed json response
 			return response()->json([
 				'success' => false,
 				'response' => 'Invalid restaurant specifics.'
@@ -32,6 +34,7 @@ function posts() {
 		$restaurant->image = $request->image;
 		$restaurant->save();
 		
+		// Successful json response
 		return response()->json([
 			'success' => true,
 			'response' => 'Successfully submitted data.'
