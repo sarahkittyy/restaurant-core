@@ -35,10 +35,15 @@ Route::get("/", function (Request $request) {
 Route::prefix('/post')->group(function() { posts(); });
 
 /**
- * @brief Will retrieve a list of all restaurants in the database.
+ * @brief Retrieves a list of all restaurants in the database.
  * 
  * TODO: url parameters for sorting the output
  */
 Route::get("/restaurants", function (Request $request) {
-	return '404';
+	$restaurants = Restaurant::all();
+	
+	return response()->json([
+		'success' => true,
+		'restaurants' => $restaurants
+	]);
 });
