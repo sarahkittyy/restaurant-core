@@ -36,6 +36,8 @@
             }
             .content {
 				text-align: center;
+				margin: 0;
+				padding: 5px;
             }
             .title {
                 font-size: 84px;
@@ -44,9 +46,10 @@
 				border-bottom: 2px solid grey;
 			}
 			.restaurant-box {
-				outline: 1px solid #dddddd;
+				outline: 1px solid #eee;
 				width: 35%;
 				padding: 8px;
+				overflow: auto;
 			}
 			.restaurant-name {
 				font-size: 40px;
@@ -55,13 +58,13 @@
 			.restaurant-address {
 				font-size: 14px;
 			}
-			.left-align {
+			.image {
 				align-content: left;
 				justify-content: left;
 				overflow: auto;
-				padding: 15px;
-				vertical-align: middle;
-				width: auto;
+				padding: 3px;
+				max-width: 50%;
+				max-height: 100%;
 			}
         </style>
     </head>
@@ -76,7 +79,7 @@
 		<div class="center">
 			@foreach ($restaurants as $restaurant)
 				<div class="restaurant-box center">
-					<img align="left" class="left-align" src={{$restaurant->image}} />
+					<img align="left" class="image" src={{$restaurant->image}} />
 					<p class="restaurant-name content">{{$restaurant->name}}</p>
 					<p class="restaurant-address content">{{$restaurant->address}}</p>
 				</div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Restaurant;
 use Illuminate\Http\Request;
 
 /**
