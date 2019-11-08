@@ -3,6 +3,8 @@
 use App\Restaurant;
 use Illuminate\Http\Request;
 
+include('post.php');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,39 +25,14 @@ Route::get("/", function (Request $request) {
 });
 
 /**
- * @brief Upload endpoint for posting a new restaurant listing
+ * @brief 
  * 
- * POST PARAMS:
- * - name -> string > len 3
- * - address & image url
+ * ENDPOINTS
+ * - /post/restaurant -> upload a new restaurant
+ * - /post/review -> upload a new review
+ * 
  */
-Route::post('/restaurants', function (Request $request) {
-	/**
-	 * name -> required, len > 3
-	 * address -> required
-	 * image -> required
-	 */
-	$validator = Validator::make($request->all(), [
-		'name' => 'required|min:3',
-		'address' => 'required',
-		'image' => 'required'
-	]);
-
-	if ($validator->fails()) {
-		return redirect()
-			->route('/failure', ['msg' => 'Failed to upload new restaurant.'])
-			->withErrors($validator);
-	}
-	
-	// Creates and saves the restaurant model.
-	$restaurant = new Restaurant;
-	$restaurant->name = $request->name;
-	$restaurant->address = $request->address;
-	$restaurant->image = $request->image;
-	$restaurant->save();
-	
-	return response('Success!');
-});
+Route::prefix('/post')->group(function() { posts(); });
 
 /**
  * @brief Will retrieve a list of all restaurants in the database.
