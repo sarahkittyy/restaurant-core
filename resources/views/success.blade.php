@@ -22,7 +22,7 @@
 			font-size: 30px;
 		}
 		.return-link {
-			
+			font-size: 30px;
 		}
 	</style>
 </head>
