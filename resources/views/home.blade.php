@@ -19,50 +19,69 @@
                 height: 100vh;
                 margin: 0;
             }
-
-            .full-height {
-                height: 100vh;
-            }
-
+			.full-width {
+				width: 100%;
+				margin: 0;
+			}
             .flex-center {
                 display: flex;
                 justify-content: center;
             }
-
+			.center {
+				width: 100%;
+				margin: auto;
+			}
             .position-ref {
                 position: relative;
             }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
             .content {
-                text-align: center;
+				text-align: center;
             }
-
             .title {
                 font-size: 84px;
 			}
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-			
 			.underline {
-				text-decoration: underline;
+				border-bottom: 2px solid grey;
+			}
+			.restaurant-box {
+				outline: 1px solid #dddddd;
+				width: 35%;
+				padding: 8px;
+			}
+			.restaurant-name {
+				font-size: 40px;
+				font-weight: bold;
+			}
+			.restaurant-address {
+				font-size: 14px;
+			}
+			.left-align {
+				align-content: left;
+				justify-content: left;
+				overflow: auto;
+				padding: 15px;
+				vertical-align: middle;
+				width: auto;
 			}
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div style="padding-bottom: 10px; margin-bottom: 25px;" class="flex-center position-ref full-width underline">
             <div class="content">
-                <div class="title m-b-md underline">
+                <div class="title">
 					Home
                 </div>
-            </div>
+			</div>
         </div>
+		<div class="center">
+			@foreach ($restaurants as $restaurant)
+				<div class="restaurant-box center">
+					<img align="left" class="left-align" src={{$restaurant->image}} />
+					<p class="restaurant-name content">{{$restaurant->name}}</p>
+					<p class="restaurant-address content">{{$restaurant->address}}</p>
+				</div>
+				<br />
+			@endforeach
+		</div>
     </body>
 </html>

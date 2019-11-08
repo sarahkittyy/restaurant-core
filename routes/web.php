@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Restaurant;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,8 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('home');
+	$restaurants = Restaurant::all();
+    return view('home', ['restaurants' => $restaurants]);
 });
 
 /**
