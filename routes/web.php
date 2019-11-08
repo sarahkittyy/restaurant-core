@@ -30,3 +30,10 @@ Route::get('/restaurant/{name}', function ($name) {
 Route::get('/success', function (Request $request) {
 	return view('success', ['msg' => $request->input('msg')]);
 });
+
+/**
+ * Generic failure page
+ */
+Route::get('/failure', function (Request $request) {
+	return view('failure', ['msg' => $request->input('msg')]);
+});
