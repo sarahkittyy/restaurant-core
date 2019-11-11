@@ -21,26 +21,19 @@
             }
 			.full-width {
 				width: 100%;
-				margin: 0;
+				margin: auto;
 			}
-            .flex-center {
-                display: flex;
-                justify-content: center;
-            }
 			.center {
 				width: 100%;
 				margin: auto;
 			}
-            .position-ref {
-                position: relative;
-            }
-            .content {
+			.content {
+				align-content: center;
 				text-align: center;
-				margin: 0;
-				padding: 5px;
-            }
+			}
             .title {
                 font-size: 84px;
+				display: inline;
 			}
 			.underline {
 				border-bottom: 2px solid grey;
@@ -50,6 +43,7 @@
 				width: 35%;
 				padding: 8px;
 				overflow: auto;
+				text-align: center;
 			}
 			.restaurant-name {
 				font-size: 40px;
@@ -66,25 +60,58 @@
 				max-width: 50%;
 				max-height: 100%;
 			}
-        </style>
+			.bottom-pad {
+				margin-bottom: 25px;
+				padding-bottom: 10px;
+			}
+			.upload-button {
+				padding: 10px;
+				margin: auto;
+				float: right;
+				border: 2px solid #ccc;
+				background-color: #eee;
+				border-right: none;
+				border-top: none;
+				outline: none;
+			}
+			.upload-button:hover {
+				background-color: #ddd;
+				border-left-style: inset;
+				border-bottom-style: inset;
+			}
+		</style>
+		<script>
+			function post() {
+				window.location.pathname = '/new';
+			}
+		</script>
     </head>
     <body>
-        <div style="padding-bottom: 10px; margin-bottom: 25px;" class="flex-center position-ref full-width underline">
-            <div class="content">
-                <div class="title">
-					Home
-                </div>
+		<div class="full-width underline content bottom-pad">
+			<div class="title">
+				Home
 			</div>
-        </div>
+			<!--
+			i swear to god i spent 45 minutes trying to center this button
+			on the right of the header
+			i quit
+			it's a feature now
+			-->
+			<button type="button"
+					class="upload-button"
+					onclick="post()">
+				Post Restaurant
+			</button>
+		</div>
 		<div class="center">
 			@foreach ($restaurants as $restaurant)
 				<div class="restaurant-box center">
 					<img align="left" class="image" src={{$restaurant->image}} />
-					<p class="restaurant-name content">{{$restaurant->name}}</p>
-					<p class="restaurant-address content">{{$restaurant->address}}</p>
+					<p class="restaurant-name">{{$restaurant->name}}</p>
+					<p class="restaurant-address">{{$restaurant->address}}</p>
 				</div>
 				<br />
 			@endforeach
-		</div>
+			<div/>
     </body>
 </html>

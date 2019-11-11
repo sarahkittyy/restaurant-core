@@ -23,7 +23,11 @@ Route::get('/', function () {
  * @brief Displays a page focused on the specific restaurant at hand
  */
 Route::get('/restaurant/{name}', function ($name) {
-	return 'restaurant '.$name;
+	return 'Not Implemented';
+});
+
+Route::get('/new', function () {
+	return view('post-restaurant');
 });
 
 /**
