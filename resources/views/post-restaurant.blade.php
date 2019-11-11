@@ -38,9 +38,24 @@
 			border: 2px solid #eee;
 			margin: auto;
 		}
+		.button {
+			padding: 20px;
+			margin: auto;
+			border: 2px solid #ccc;
+			background-color: #eee;
+			outline: none;
+			display: block;
+		}
+		.button:hover {
+			background-color: #ddd;
+			border-style: inset;
+			border-style: inset;
+		}
 	</style>
 	<script>
-		
+		function back() {
+			window.history.back();
+		}
 	</script>
 </head>
 <body>
@@ -48,6 +63,9 @@
 		<div class="title">
 			Upload a new restaurant
 		</div>
+		<button onclick="back()" type="button" class="button">
+			Back
+		</button>
 	</div>
 	<div class="main content">
 		

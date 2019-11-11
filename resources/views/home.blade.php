@@ -9,7 +9,8 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        <!-- Styles -->
+		<!-- Styles -->
+		<!-- frontend is scary -->
         <style>
             html, body {
                 background-color: #fff;
@@ -30,10 +31,11 @@
 			.content {
 				align-content: center;
 				text-align: center;
+				justify-content: center;
 			}
             .title {
                 font-size: 84px;
-				display: inline;
+				display: inline-block;
 			}
 			.underline {
 				border-bottom: 2px solid grey;
@@ -65,19 +67,17 @@
 				padding-bottom: 10px;
 			}
 			.upload-button {
-				padding: 10px;
+				padding: 20px;
 				margin: auto;
-				float: right;
 				border: 2px solid #ccc;
 				background-color: #eee;
-				border-right: none;
-				border-top: none;
 				outline: none;
+				display: block;
 			}
 			.upload-button:hover {
 				background-color: #ddd;
-				border-left-style: inset;
-				border-bottom-style: inset;
+				border-style: inset;
+				border-style: inset;
 			}
 		</style>
 		<script>
@@ -107,7 +107,7 @@
 			@foreach ($restaurants as $restaurant)
 				<div class="restaurant-box center">
 					<img align="left" class="image" src={{$restaurant->image}} />
-					<p class="restaurant-name">{{$restaurant->name}}</p>
+					<a class="restaurant-name">{{$restaurant->name}}</a>
 					<p class="restaurant-address">{{$restaurant->address}}</p>
 				</div>
 				<br />
