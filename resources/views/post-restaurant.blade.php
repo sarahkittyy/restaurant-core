@@ -14,9 +14,43 @@
 			height: 100vh;
 			margin: 0;
 		}
+		.title {
+			font-size: 72px;
+			display: inline;
+		}
+		.underline {
+			border-bottom: 2px solid grey;
+		}
+		.full-width {
+			width: 100%;
+			margin: auto;
+		}
+		.content {
+			align-content: center;
+			text-align: center;
+		}
+		.bottom-pad {
+			margin-bottom: 25px;
+			padding-bottom: 10px;
+		}
+		.main {
+			width: 40%;
+			border: 2px solid #eee;
+			margin: auto;
+		}
 	</style>
+	<script>
+		
+	</script>
 </head>
 <body>
-	implementing
+	<div class="full-width bottom-pad underline content">
+		<div class="title">
+			Upload a new restaurant
+		</div>
+	</div>
+	<div class="main content">
+		
+	</div>
 </body>
 </html>
