@@ -2,8 +2,9 @@
 
 use App\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
-include('post.php');
+include_once('post.php');
 
 /*
 |--------------------------------------------------------------------------
