@@ -2,6 +2,7 @@
 
 use App\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * @brief Endpoints for uploading new objects to the server.
@@ -25,7 +26,7 @@ function posts() {
 			return response()->json([
 				'success' => false,
 				'response' => 'Invalid restaurant specifics.'
-			]);
+			], 400);
 		}
 		
 		// Creates and saves the restaurant model.
@@ -39,6 +40,31 @@ function posts() {
 		return response()->json([
 			'success' => true,
 			'response' => 'Successfully submitted data.'
+		], 200);
+	});
+	
+	/// Image uplaod endpoint
+	Route::post('/image', function (Request $request) {
+		$validator = Validator::make($request->all(), [
+			'image' => 'required|file'
 		]);
+		
+		if($validator->fails()) {
+			return response()->json([
+				'success' => false,
+				'response' => 'No image given.'
+			], 400);
+		}
+		
+		$image = $request->file('image');
+		$name = 'image_'.Str::random(10).'.'.$image->extension();
+		
+		$image->storeAs('.', $name, 'public');
+		
+		return response()->json([
+			'success' => true,
+			'response' => 'Successfully added image to cdn.',
+			'route' => '/cdn/'.$name,
+		], 200);
 	});
 }

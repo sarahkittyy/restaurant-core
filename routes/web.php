@@ -53,5 +53,6 @@ Route::get('/failure', function (Request $request) {
  * @brief Retrieve a file saved in public storage.
  */
 Route::get('/cdn/{file}', function ($file) {
-	return Storage::disk('public')->get($file);
+	return response(Storage::disk('public')->get($file))
+			->header('Content-Type', 'image');
 });
