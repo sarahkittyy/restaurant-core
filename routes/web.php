@@ -26,6 +26,9 @@ Route::get('/restaurant/{name}', function ($name) {
 	return 'Not Implemented';
 });
 
+/**
+ * @brief Routes to the new restaurant route.
+ */
 Route::get('/new', function () {
 	return view('post-restaurant');
 });
