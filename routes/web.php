@@ -22,8 +22,9 @@ Route::get('/', function () {
 /**
  * @brief Displays a page focused on the specific restaurant at hand
  */
-Route::get('/restaurant/{name}', function ($name) {
-	return 'Not Implemented';
+Route::get('/restaurant', function (Request $request) {
+	$restaurant = $request->input('restaurant');
+	return 'hewwo, '.$restaurant;
 });
 
 /**

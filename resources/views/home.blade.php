@@ -84,6 +84,9 @@
 			function post() {
 				window.location.pathname = '/new';
 			}
+			function toRestaurant(restaurant) {
+				window.location = "/restaurant?restaurant=" + encodeURIComponent(restaurant);
+			}
 		</script>
     </head>
     <body>
@@ -107,7 +110,11 @@
 			@foreach ($restaurants as $restaurant)
 				<div class="restaurant-box center">
 					<img align="left" class="image" src={{$restaurant->image}} />
-					<a class="restaurant-name">{{$restaurant->name}}</a>
+					<a class="restaurant-name"
+						href=""
+						onclick="toRestaurant(`{{$restaurant->name}}`); return false;">
+						{{$restaurant->name}}
+					</a>
 					<p class="restaurant-address">{{$restaurant->address}}</p>
 				</div>
 				<br />
