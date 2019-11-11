@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Restaurant;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +47,11 @@ Route::get('/success', function (Request $request) {
  */
 Route::get('/failure', function (Request $request) {
 	return view('failure', ['msg' => $request->input('msg')]);
+});
+
+/**
+ * @brief Retrieve a file saved in public storage.
+ */
+Route::get('/cdn/{file}', function ($file) {
+	return Storage::disk('public')->get($file);
 });
