@@ -34,9 +34,10 @@
 			padding-bottom: 10px;
 		}
 		.main {
-			width: 40%;
+			width: 20%;
 			border: 2px solid #eee;
 			margin: auto;
+			padding: 20px;
 		}
 		.button {
 			padding: 20px;
@@ -51,11 +52,47 @@
 			border-style: inset;
 			border-style: inset;
 		}
+		.error-box {
+			border: 2px solid #eee;
+			text-align: center;
+			width: 10%;
+			margin: auto;
+		}
 	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script>
 		function back() {
 			window.history.back();
 		}
+		$(document).ready(function() {
+			$('#error-text').hide();
+			$('#submit').click(function(e) {
+				e.preventDefault();
+				
+				var $this = $(this);
+				var form = $('form')[0];
+				var formdata = new FormData(form);
+
+				$.ajax({
+					//TODO: clean this up for production
+					url: '/api/post/restaurant',
+					method: 'POST',
+					contentType: false,
+					processData: false,
+					data: formdata
+				}).done(function (response) {
+					window.location = '/success?msg=' + encodeURIComponent(response.response);
+				}).fail(function (response) {
+					let json = response.responseJSON;
+					console.error(json);
+					$('#error-text').show();
+					$('#error-text').html(json.response);
+					$('#error-text').css('border-color', '#ff2929');
+				});
+				
+				return false;
+			});
+		});
 	</script>
 </head>
 <body>
@@ -68,6 +105,23 @@
 		</button>
 	</div>
 	<div class="main content">
+		<form>
+			{{ Form::label('Restaurant Name: ') }}
+			{{ Form::text('name') }}
+			<br />
+			{{ Form::label('Address: ') }}
+			{{ Form::textarea('address', null, [
+				'rows' => 3,
+				'cols' => 40,
+			]) }}
+			<br />
+			{{ Form::label('Image: ') }}
+			{{ Form::file('image') }}
+			<br />
+			<button type="button" id="submit">Submit</button>
+		</form>
+	</div>
+	<div id="error-text" class="error-box">
 		
 	</div>
 </body>
