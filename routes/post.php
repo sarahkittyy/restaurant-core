@@ -3,6 +3,31 @@
 use App\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
+
+/**
+ * @brief INTERNAL FUNCTION ONLY
+ * Used to upload images from the /restaurant endpoint to the /input endpoint
+ */
+function postImage($image)
+{
+	//TODO: verify that this would work in production
+	// (cuz i'm pretty sure it won't)
+	$client = new Client();
+	
+	$res = $client->request('POST', 'homestead.test/api/post/image', [
+		'multipart' => [
+			[
+				'name' => 'image',
+				'contents' => file_get_contents($image),
+				'filename' => '/tmp/whatever',
+			]
+		],
+	]);
+	$json = json_decode($res->getBody());
+	
+	return $json->route;
+}
 
 /**
  * @brief Endpoints for uploading new objects to the server.
@@ -18,7 +43,7 @@ function posts() {
 		$validator = Validator::make($request->all(), [
 			'name' => 'required|min:3',
 			'address' => 'required',
-			'image' => 'required'
+			'image' => ['required', 'mimes:jpeg,bmp,png'],
 		]);
 
 		if ($validator->fails()) {
@@ -33,7 +58,8 @@ function posts() {
 		$restaurant = new Restaurant;
 		$restaurant->name = $request->name;
 		$restaurant->address = $request->address;
-		$restaurant->image = $request->image;
+		$img = postImage($request->image);
+		$restaurant->image = $img;
 		$restaurant->save();
 		
 		// Successful json response
@@ -46,7 +72,7 @@ function posts() {
 	/// Image uplaod endpoint
 	Route::post('/image', function (Request $request) {
 		$validator = Validator::make($request->all(), [
-			'image' => 'required|file'
+			'image' => ['required', 'mimes:jpeg,bmp,png'],
 		]);
 		
 		if($validator->fails()) {
