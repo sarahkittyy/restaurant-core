@@ -11,6 +11,7 @@ A demo restaurant app
 * Upload restaurants
 * View restaurant details
 * Restaurant submission validation
+* Inconsistent curly-brace styling
 * DB Seeders
 
 ## TODO
