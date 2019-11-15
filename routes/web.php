@@ -24,8 +24,9 @@ Route::get('/', function () {
  * @brief Displays a page focused on the specific restaurant at hand
  */
 Route::get('/restaurant', function (Request $request) {
-	$restaurant = $request->input('restaurant');
-	return 'hewwo, '.$restaurant;
+	$restaurantName = $request->input('restaurant');
+	$restaurant = Restaurant::where('name', $restaurantName)->first();
+	return view('restaurant', ['restaurant' => $restaurant]);
 });
 
 /**
