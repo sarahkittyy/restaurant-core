@@ -30,10 +30,15 @@ Route::get('/restaurant', function (Request $request) {
 });
 
 /**
- * @brief Routes to the new restaurant route.
+ * @brief Routes to the restaurant / review routes
  */
-Route::get('/new', function () {
-	return view('post-restaurant');
+Route::prefix('/new')->group(function () {
+	Route::get('/restaurant', function () {
+		return view('post-restaurant');
+	});
+	Route::get('/review', function () {
+		return 'owo'; 
+	});
 });
 
 /**
