@@ -54,7 +54,27 @@
 			max-width: 200px;
 			height: auto;
 		}
+		.iblock {
+			display: inline-block;
+			margin: 3px;
+		}
+		button {
+			padding: 20px;
+			margin: auto;
+			border: 2px solid #ccc;
+			background-color: #eee;
+			outline: none;
+			display: block;
+		}
+		button:hover {
+			background-color: #ddd;
+			border-style: inset;
+			border-style: inset;
+		}
 	</style>
+	<script>
+		
+	</script>
 </head>
 <!-- DATA AVAILABLE
 	- $restaurant->name
@@ -68,6 +88,11 @@
 			<h2 class="title">{{$restaurant->name}}</h2>
 			<h4 class="location">{{$restaurant->address}}</h4>
 		</div>
+		<br />
+		<button class="iblock"
+				onclick="window.location = '/new/review'">New Review</button>
+		<button class="iblock"
+				onclick="window.location = '/'">Home</button>
 	</div>
 	<!--TODO: add reviews here -->
 </body>
