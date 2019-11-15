@@ -82,7 +82,7 @@
 		</style>
 		<script>
 			function post() {
-				window.location.pathname = '/new';
+				window.location.pathname = '/new/restaurant';
 			}
 			function toRestaurant(restaurant) {
 				window.location = "/restaurant?restaurant=" + encodeURIComponent(restaurant);
