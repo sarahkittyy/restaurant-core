@@ -54,6 +54,16 @@ function posts() {
 			], 400);
 		}
 		
+		//! Verifies that the restaurant isn't already in the DB
+		$restaurants = Restaurant::all();
+		if($restaurants->contains('name', '=', $request->name))
+		{ 
+			return response()->json([
+				'success' => false,
+				'response' => 'A restaurant with that name already exists.'
+			], 400);
+		}
+		
 		// Creates and saves the restaurant model.
 		$restaurant = new Restaurant;
 		$restaurant->name = $request->name;
