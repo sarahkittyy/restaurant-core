@@ -14,7 +14,6 @@ A demo restaurant app
 * Restaurant submission validation
 * Inconsistent curly-brace styling
 * DB Seeders
-
-## TODO
-
-* Sorting restaurants on the main page
+* Endpoints for general / specific / average reviews
+* Upload and view reviews
+* Restaurant sorting
