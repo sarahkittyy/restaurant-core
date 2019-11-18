@@ -73,7 +73,11 @@
 		}
 	</style>
 	<script>
-		
+		function toReview(restaurant)
+		{
+			console.log(restaurant);
+			window.location = '/new/review?restaurant=' + encodeURIComponent(restaurant);
+		}
 	</script>
 </head>
 <!-- DATA AVAILABLE
@@ -90,7 +94,7 @@
 		</div>
 		<br />
 		<button class="iblock"
-				onclick="window.location = '/new/review'">New Review</button>
+				onclick="toReview('{{$restaurant->name}}')">New Review</button>
 		<button class="iblock"
 				onclick="window.location = '/'">Home</button>
 	</div>
