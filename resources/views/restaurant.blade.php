@@ -71,12 +71,70 @@
 			border-style: inset;
 			border-style: inset;
 		}
+		.review-container {
+			border: 3px solid #eee;
+			width: 50%;
+			margin: auto;
+		}
+		.error-box {
+			border: 2px solid #eee;
+			text-align: center;
+			width: 10%;
+			margin: auto;
+		}
+		.review-title {
+			font-size: 60px;
+			padding: 10px;
+			color: black;
+		}
+		.review-body {
+			
+		}
+		.review-rating {
+			color: black;
+			font-size: 50px;
+			padding: 10px;
+		}
 	</style>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script>
 		function toReview(restaurant)
 		{
 			console.log(restaurant);
 			window.location = '/new/review?restaurant=' + encodeURIComponent(restaurant);
+		}
+		$(() => {
+			// A lil hacky, but it works
+			let restaurant = $('h2.title').html();
+			$("#reviews").hide();
+			$("#error-text").hide();
+			$.ajax({
+				url: '/api/reviews?restaurant=' + encodeURIComponent(restaurant),
+				method: 'GET'
+			})
+			.fail(function (res) {
+				$('#error-text').show();
+				$('#error-text').html(res.responseJSON.response);
+				$('#error-text').css('border-color', '#ff2929');
+			})
+			.done(function (res) {
+				let container = $('#reviews');
+				container.show();
+				let reviews = res.reviews;
+				reviews.forEach(review => {
+					container.append(reviewBuilder(review.title, review.body, review.rating));
+				});
+			});
+		});
+		function reviewBuilder(title, body, rating)
+		{
+			return `
+			<div class="review">
+				<span class="review-title">${title}</span>
+				<span class="review-rating">${rating} 🌟</span>
+				<p class="review-body">${body}</p>
+			</div>
+			`;
 		}
 	</script>
 </head>
@@ -98,6 +156,9 @@
 		<button class="iblock"
 				onclick="window.location = '/'">Home</button>
 	</div>
-	<!--TODO: add reviews here -->
+	<div id="reviews" class="review-container">
+		
+	</div>
+	<div id="error-text" class="error-box"></div>
 </body>
-</html>
+</>
