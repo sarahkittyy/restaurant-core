@@ -4,6 +4,7 @@ use App\Restaurant;
 use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 include_once('post.php');
 
@@ -52,6 +53,7 @@ Route::get("/restaurants", function (Request $request) {
 
 /**
  * @brief Retrieves a list of all reviews in the database.
+ * 
  */
 
 Route::get('/reviews', function (Request $request) {
@@ -90,4 +92,48 @@ Route::get('/reviews', function (Request $request) {
 			]);
 		}
 	}
+});
+
+/**
+ * @brief Gets the average review rating of a restaurant.
+ */
+Route::get('/averageReview', function (Request $request) {
+	/**
+	 * restaurant -> required, name of restaurant to calculate review rating for.
+	 */
+	$validator = Validator::make($request->all(), [
+		'restaurant' => 'required'
+	]);
+	
+	if($validator->fails())
+	{
+		return response()->json([
+			'success' => false,
+			'response' => 'Restaurant name must be provided.'
+		],400);
+	}
+	
+	// Get & validate the restaurant
+	$restaurant = Restaurant::all()->where('name', '=', $request->restaurant)->first();
+	if(is_null($restaurant))
+	{
+		return response()->json([
+			'success' => false,
+			'response' => 'Restaurant '.$request->restaurant.' not found.'
+		], 400);
+	}
+	
+	// Get all reviews of the restaurant
+	$reviews = $restaurant->reviews;
+	$sum = 0;
+	$count = $reviews->count();
+	foreach ($reviews as $review)
+	{
+		$sum += $review->rating;
+	}
+	
+	return response()->json([
+		'success' => true,
+		'response' => ($sum / $count),
+	], 200);
 });
