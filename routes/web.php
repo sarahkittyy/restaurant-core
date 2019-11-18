@@ -31,7 +31,10 @@ Route::get('/', function (Request $request) {
 Route::get('/restaurant', function (Request $request) {
 	$restaurantName = $request->input('restaurant');
 	$restaurant = Restaurant::where('name', $restaurantName)->first();
-	return view('restaurant', ['restaurant' => $restaurant]);
+	return view('restaurant', [
+		'restaurant' => $restaurant,
+		'sortingBy' => $request->sortBy,
+		'descend' => $request->descend ]);
 });
 
 /**

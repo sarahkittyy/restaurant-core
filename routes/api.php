@@ -95,7 +95,7 @@ Route::get('/reviews', function (Request $request) {
 	{
 		return response()->json([
 			'success' => true,
-			'reviews' => $reviews,
+			'reviews' => Review::all(),
 		]);
 	}
 	else
@@ -113,10 +113,27 @@ Route::get('/reviews', function (Request $request) {
 		}
 		else
 		{
+			
+			$reviews = $restaurant->reviews;
+			$sorted = null;
+
+			// First, check for sorting parameters
+			$sortBy = $request->sortBy;
+			$desc = $request->descend == '1';
+			
+			if(!is_null($sortBy))
+			{
+				$sorted = $reviews->sortBy($sortBy, SORT_REGULAR, $desc)->values()->all();
+			}
+			else
+			{
+				$sorted = $reviews;
+			}
+
 			// Otherwise, return all reviews for that restaurant.
 			return response()->json([
 				'success' => true,
-				'reviews' => $restaurant->reviews,
+				'reviews' => $sorted,
 			]);
 		}
 	}

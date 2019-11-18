@@ -58,15 +58,14 @@
 			display: inline-block;
 			margin: 3px;
 		}
-		button {
+		.generic-button {
 			padding: 20px;
 			margin: auto;
 			border: 2px solid #ccc;
 			background-color: #eee;
 			outline: none;
-			display: block;
 		}
-		button:hover {
+		.generic-button:hover {
 			background-color: #ddd;
 			border-style: inset;
 			border-style: inset;
@@ -116,7 +115,9 @@
 			$("#reviews").hide();
 			$("#error-text").hide();
 			$.ajax({
-				url: '/api/reviews?restaurant=' + encodeURIComponent(restaurant),
+				url: '/api/reviews?restaurant=' +
+						encodeURIComponent(restaurant) + '&' + 
+						$('#sorting-form').serialize(),
 				method: 'GET'
 			})
 			.fail(function (res) {
@@ -133,7 +134,8 @@
 				});
 			});
 			$.ajax({
-				url: '/api/averageReview?restaurant=' + encodeURIComponent(restaurant),
+				url: '/api/averageReview?restaurant=' +
+						encodeURIComponent(restaurant),
 				method: 'GET'
 			})
 			.fail(function (res) {
@@ -143,6 +145,13 @@
 				let star = '🌟';
 				
 				$('#average-review').html('Rating: ' + res.response + ' ' + star);
+			});
+			
+			$('#sorting-form-submit').click(() => {
+				window.location =
+					'/restaurant?restaurant=' +
+					encodeURIComponent(restaurant) +
+					'&' + $('#sorting-form').serialize();
 			});
 		});
 		function reviewBuilder(title, body, rating)
@@ -170,10 +179,25 @@
 			<h4 class="location">{{$restaurant->address}}</h4>
 		</div>
 		<p id="average-review" class="average-review"></p>
-		<button class="iblock"
+		<button class="generic-button iblock"
 				onclick="toReview('{{$restaurant->name}}')">New Review</button>
-		<button class="iblock"
+		<button class="generic-button iblock"
 				onclick="window.location = '/'">Home</button>
+	</div>
+	<div class="content center full-width bottom-pad">
+		<form id="sorting-form">
+			{{ Form::label('Sort by: ') }}
+			{{ Form::select('sortBy', [
+				'rating' => 'rating',
+				'created_at' => 'recent',
+				'title' => 'title',
+			], $sortingBy) }}
+			{{ Form::select('descend', [
+				'0' => 'ascending',
+				'1' => 'descending'
+			], $descend) }}
+			<button id="sorting-form-submit" type="button">Go</button>
+		</form>
 	</div>
 	<div id="reviews" class="review-container">
 		
