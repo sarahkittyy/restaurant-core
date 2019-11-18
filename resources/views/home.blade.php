@@ -102,7 +102,7 @@
 						dataType: 'json'
 					})
 					.fail(function (res) {
-						console.error(res.responseJSON.response);	
+						console.error(res.response);	
 					})
 					.then(function (res) {
 						$(elem).children('#average-review')

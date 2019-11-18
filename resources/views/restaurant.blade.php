@@ -95,6 +95,12 @@
 			font-size: 50px;
 			padding: 10px;
 		}
+		.average-review {
+			color: black;
+			font-size: 30px;
+			padding-top: 0px;
+			margin-top: 0px;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script>
@@ -106,6 +112,7 @@
 		$(() => {
 			// A lil hacky, but it works
 			let restaurant = $('h2.title').html();
+
 			$("#reviews").hide();
 			$("#error-text").hide();
 			$.ajax({
@@ -124,6 +131,18 @@
 				reviews.forEach(review => {
 					container.append(reviewBuilder(review.title, review.body, review.rating));
 				});
+			});
+			$.ajax({
+				url: '/api/averageReview?restaurant=' + encodeURIComponent(restaurant),
+				method: 'GET'
+			})
+			.fail(function (res) {
+				console.error(res.response);
+			})
+			.done(function (res) {
+				let star = '🌟';
+				
+				$('#average-review').html('Rating: ' + res.response + ' ' + star);
 			});
 		});
 		function reviewBuilder(title, body, rating)
@@ -150,7 +169,7 @@
 			<h2 class="title">{{$restaurant->name}}</h2>
 			<h4 class="location">{{$restaurant->address}}</h4>
 		</div>
-		<br />
+		<p id="average-review" class="average-review"></p>
 		<button class="iblock"
 				onclick="toReview('{{$restaurant->name}}')">New Review</button>
 		<button class="iblock"
