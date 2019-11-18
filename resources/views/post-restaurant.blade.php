@@ -74,7 +74,6 @@
 				var formdata = new FormData(form);
 
 				$.ajax({
-					//TODO: clean this up for production
 					url: '/api/post/restaurant',
 					method: 'POST',
 					contentType: false,
