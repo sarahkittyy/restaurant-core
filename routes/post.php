@@ -95,6 +95,7 @@ function posts() {
 			'restaurant' => 'required'
 		]);
 		
+		// Validating the request
 		if($validator->fails()) {
 			return response()->json([
 				'success' => false,
@@ -102,16 +103,27 @@ function posts() {
 			], 400);
 		}
 		
+		// Constructing the review
 		$review = new Review;
 		$review->title = $request->title;
 		$review->body = $request->body;
 		$review->rating = $request->rating;
 		
+		// Find and validate the restaurant given the name
 		$restaurant = Restaurant::all()->where('name', '=', $request->restaurant)->first();
+		if(is_null($restaurant))
+		{
+			return response()->json([
+				'success' => false,
+				'response' => 'Could not find restaurant '.$request->restaurant.'.',
+			], 400);
+		}
 		$review->restaurant()->associate($restaurant);
 		
+		// Save the review
 		$review->save();
 		
+		// Successful response.
 		return response()->json([
 			'success' => true,
 			'response' => 'Successfully submitted data.'
