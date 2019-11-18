@@ -20,7 +20,7 @@ class CreateReviewTable extends Migration
 			$table->string('title');
 			$table->text('body');
 			$table->integer('rating');
-			//TODO: implement linking to the restaurant
+			$table->string('restaurant_id');
 		});
     }
 

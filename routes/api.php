@@ -1,6 +1,7 @@
 <?php
 
 use App\Restaurant;
+use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -47,4 +48,40 @@ Route::get("/restaurants", function (Request $request) {
 		'success' => true,
 		'restaurants' => $restaurants
 	]);
+});
+
+/**
+ * @brief Retrieves a list of all reviews in the database.
+ */
+
+Route::get('/reviews', function (Request $request) {
+	$reviews = Review::all();
+	
+	$restaurant_name = $request->restaurant;
+	
+	if(is_null($restaurant_name))
+	{
+		return response()->json([
+			'success' => true,
+			'reviews' => $reviews,
+		]);
+	}
+	else
+	{
+		$restaurant = Restaurant::all()->where('name', '=', $restaurant_name)->first();
+		if(is_null($restaurant))
+		{
+			return response()->json([
+				'success' => false,
+				'response' => $restaurant_name.' not found.',
+			]);
+		}
+		else
+		{
+			return response()->json([
+				'success' => true,
+				'reviews' => $restaurant->reviews,
+			]);
+		}
+	}
 });

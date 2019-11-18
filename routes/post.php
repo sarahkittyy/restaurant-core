@@ -1,6 +1,7 @@
 <?php
 
 use App\Restaurant;
+use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
@@ -73,6 +74,44 @@ function posts() {
 		$restaurant->save();
 		
 		// Successful json response
+		return response()->json([
+			'success' => true,
+			'response' => 'Successfully submitted data.'
+		], 200);
+	});
+	
+	/// Review upload endpoint
+	Route::post('/review', function (Request $request) {
+		/**
+		 * title -> required
+		 * body -> required
+		 * rating -> required, must be an integer from 1 to 10
+		 * restaurant -> required, name of the restaurant to associate with
+		 */
+		$validator = Validator::make($request->all(), [
+			'title' => 'required',
+			'body' => 'required',
+			'rating' => 'required|integer|gte:1|lte:10',
+			'restaurant' => 'required'
+		]);
+		
+		if($validator->fails()) {
+			return response()->json([
+				'success' => false,
+				'response' => 'Invalid review parameters.'
+			], 400);
+		}
+		
+		$review = new Review;
+		$review->title = $request->title;
+		$review->body = $request->body;
+		$review->rating = $request->rating;
+		
+		$restaurant = Restaurant::all()->where('name', '=', $request->restaurant)->first();
+		$review->restaurant()->associate($restaurant);
+		
+		$review->save();
+		
 		return response()->json([
 			'success' => true,
 			'response' => 'Successfully submitted data.'
