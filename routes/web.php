@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', function () {
-	$restaurants = Restaurant::all();
-    return view('home', ['restaurants' => $restaurants]);
+Route::get('/', function (Request $request) {
+	$req = Request::create(route('api.restaurants'), 'GET', $request->all());
+	$resp = json_decode(app()->handle($req)->getContent());
+	return view('home', [
+		'restaurants' => $resp->restaurants,
+		'sortingBy' => $request->sortBy,
+		'descend' => $request->descend,
+	]);
 });
 
 /**

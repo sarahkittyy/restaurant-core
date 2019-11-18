@@ -77,7 +77,7 @@ Route::get("/restaurants", function (Request $request) {
 		'success' => true,
 		'restaurants' => $sorted,
 	]);
-});
+})->name('api.restaurants');
 
 /**
  * @brief Retrieves a list of all reviews in the database.

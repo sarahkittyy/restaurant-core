@@ -110,8 +110,11 @@
 					});
 					
 				});
+				
+				$('#sorting-form-submit').click(() => {
+					window.location = '?' + $('#sorting-form').serialize();
+				});
 			});
-			
 		</script>
     </head>
     <body>
@@ -130,6 +133,21 @@
 					onclick="post()">
 				Post Restaurant
 			</button>
+		</div>
+		<div class="content center full-width bottom-pad">
+			<form id="sorting-form">
+				{{ Form::label('Sort By: ') }}
+				{{ Form::select('sortBy', [
+					'rating' => 'rating',
+					'created_at' => 'recent',
+					'name' => 'name',
+				], $sortingBy) }}
+				{{ Form::select('descend', [
+					'1' => 'ascending',
+					'0' => 'descending',
+				], $descend)}}
+				<button id="sorting-form-submit" type="button">Go</button>
+			</form>
 		</div>
 		<div class="center">
 			@foreach ($restaurants as $restaurant)
