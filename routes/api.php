@@ -134,6 +134,6 @@ Route::get('/averageReview', function (Request $request) {
 	
 	return response()->json([
 		'success' => true,
-		'response' => ($sum / $count),
+		'response' => round($sum / $count, 2),
 	], 200);
 });

@@ -79,7 +79,11 @@
 				border-style: inset;
 				border-style: inset;
 			}
+			.average-review {
+				color: black;
+			}
 		</style>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
 		<script>
 			function post() {
 				window.location.pathname = '/new/restaurant';
@@ -87,6 +91,27 @@
 			function toRestaurant(restaurant) {
 				window.location = "/restaurant?restaurant=" + encodeURIComponent(restaurant);
 			}
+			let star = '🌟';
+			
+			$(() => {
+				$('.restaurant-box').each((i, elem) => {
+					let restaurant = $(elem).children('.restaurant-name').html();
+					$.ajax({
+						url: '/api/averageReview?restaurant=' + encodeURIComponent(restaurant),
+						method: 'GET',
+						dataType: 'json'
+					})
+					.fail(function (res) {
+						console.error(res.responseJSON.response);	
+					})
+					.then(function (res) {
+						$(elem).children('#average-review')
+							.html(res.response + ' ' + star);
+					});
+					
+				});
+			});
+			
 		</script>
     </head>
     <body>
@@ -116,6 +141,7 @@
 						{{$restaurant->name}}
 					</a>
 					<p class="restaurant-address">{{$restaurant->address}}</p>
+					<p class="average-review" id="average-review"></p>
 				</div>
 				<br />
 			@endforeach
