@@ -17,6 +17,8 @@ class RestaurantSeeder extends Seeder
     {
 		factory(Restaurant::class, 5)->create()->each(function ($restaurant) {
 			$restaurant->reviews()->save(factory(Review::class)->make());
+			$restaurant->reviews()->save(factory(Review::class)->make());
+			$restaurant->reviews()->save(factory(Review::class)->make());
 		});
     }
 }
