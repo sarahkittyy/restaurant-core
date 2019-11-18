@@ -69,9 +69,12 @@
 			$('#submit').click(function(e) {
 				e.preventDefault();
 				
+				let restaurant = $('#restaurant').html();
+				
 				var $this = $(this);
 				var form = $('form')[0];
 				var formdata = new FormData(form);
+				formdata.append('restaurant', restaurant);
 
 				$.ajax({
 					url: '/api/post/review',
@@ -103,9 +106,24 @@
 			Back
 		</button>
 	</div>
+	<!-- I want to store the restaurant name in an html element so i can query it
+		in jquery later
+		so i do it here-
+	-->
+	<template id="restaurant">{{ $restaurant }}</template>
 	<div class="main content">
 		<form>
-			
+			{{ Form::label('Review title: ') }}
+			{{ Form::text('title') }}
+			<br />
+			{{ Form::label('Review body: ') }}
+			{{ Form::textarea('body', null, [
+				'rows' => 3,
+				'cols' => 40,
+			]) }}
+			<br />
+			{{ Form::label('Rating: ') }}
+			{{ Form::number('rating', 'value', ['min' => 1, 'max' => 10]) }}
 			<br />
 			<button type="button" id="submit">Submit</button>
 		</form>
