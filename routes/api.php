@@ -40,14 +40,42 @@ Route::prefix('/post')->group(function() { posts(); });
 /**
  * @brief Retrieves a list of all restaurants in the database.
  * 
- * TODO: url parameters for sorting the output
  */
 Route::get("/restaurants", function (Request $request) {
 	$restaurants = Restaurant::all();
 	
+	// Check for sorting query
+	$sortBy = $request->sortBy;
+	$desc = $request->descend == '1';
+	$sorted = null;
+	if(!is_null($sortBy))
+	{
+		// Exceptional case if we want to sort by reviews, because otherwise we can just
+		// use sortBy normally
+		if($sortBy == 'rating')
+		{
+			$sorted = $restaurants->sortBy(function ($restaurant, $key) {
+				$request = Request::create(route('api.averageReview'), 'GET', [
+					'restaurant' => $restaurant->name,
+				], [], [], $_SERVER);
+				$response = app()->handle($request);
+				$responseBody = json_decode($response->getContent(), true);
+				return (float)$responseBody['response'];
+			});
+		}
+		else
+		{
+			$sorted = $restaurants->sortBy($sortBy, SORT_REGULAR, $desc);
+		}
+	}
+	else
+	{
+		$sorted = $restaurants;
+	}
+	
 	return response()->json([
 		'success' => true,
-		'restaurants' => $restaurants
+		'restaurants' => $sorted,
 	]);
 });
 
@@ -136,4 +164,4 @@ Route::get('/averageReview', function (Request $request) {
 		'success' => true,
 		'response' => round($sum / $count, 2),
 	], 200);
-});
+})->name('api.averageReview');
