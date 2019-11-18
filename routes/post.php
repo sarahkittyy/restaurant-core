@@ -131,7 +131,7 @@ function posts() {
 	/// Image uplaod endpoint
 	Route::post('/image', function (Request $request) {
 		$validator = Validator::make($request->all(), [
-			'image' => ['required', 'mimes:jpeg,bmp,png'],
+			'image' => ['required', 'mimes:jpg,jpeg,png'],
 		]);
 		
 		if($validator->fails()) {
