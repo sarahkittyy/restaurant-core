@@ -18,4 +18,3 @@ A demo restaurant app
 ## TODO
 
 * Sorting restaurants on the main page
-* Reviews

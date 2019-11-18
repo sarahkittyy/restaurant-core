@@ -12,11 +12,9 @@ use GuzzleHttp\Client;
  */
 function postImage($image)
 {
-	//TODO: verify that this would work in production
-	// (cuz i'm pretty sure it won't)
 	$client = new Client();
 	
-	$res = $client->request('POST', 'homestead.test/api/post/image', [
+	$res = $client->request('POST', url('/api/post/image'), [
 		'multipart' => [
 			[
 				'name' => 'image',
