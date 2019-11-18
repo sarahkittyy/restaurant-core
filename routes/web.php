@@ -36,8 +36,8 @@ Route::prefix('/new')->group(function () {
 	Route::get('/restaurant', function () {
 		return view('post-restaurant');
 	});
-	Route::get('/review', function () {
-		return 'owo'; 
+	Route::get('/review', function (Request $request) {
+		return view('post-review', [ 'restaurant' => $request->restaurant ]);
 	});
 });
 
