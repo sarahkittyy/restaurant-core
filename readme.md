@@ -17,3 +17,20 @@ A demo restaurant app
 * Endpoints for general / specific / average reviews
 * Upload and view reviews
 * Restaurant sorting
+
+## Running the Dev Environment
+
+A local version of laravel homestead is used.
+
+```bash
+# set up homestead
+git clone git@github.com:sarahkittyy/restaurant-core.git
+cd restaurant-core
+composer update
+vagrant up
+# initialize migrations
+php artisan migrate
+php artisan db:seed --class=RestaurantSeeder
+```
+
+Then you can open 192.168.10.10 in your local browser to view the test page.
