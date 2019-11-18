@@ -57,8 +57,10 @@ Route::get("/restaurants", function (Request $request) {
 Route::get('/reviews', function (Request $request) {
 	$reviews = Review::all();
 	
+	// Optional name of the restaurant to get the reviews for
 	$restaurant_name = $request->restaurant;
 	
+	// If none was specified, just return all reviews.
 	if(is_null($restaurant_name))
 	{
 		return response()->json([
@@ -68,9 +70,12 @@ Route::get('/reviews', function (Request $request) {
 	}
 	else
 	{
+		// Try getting the restaurant with the given restaurant name
 		$restaurant = Restaurant::all()->where('name', '=', $restaurant_name)->first();
+		// If that's not found..
 		if(is_null($restaurant))
 		{
+			// Failure response
 			return response()->json([
 				'success' => false,
 				'response' => $restaurant_name.' not found.',
@@ -78,6 +83,7 @@ Route::get('/reviews', function (Request $request) {
 		}
 		else
 		{
+			// Otherwise, return all reviews for that restaurant.
 			return response()->json([
 				'success' => true,
 				'reviews' => $restaurant->reviews,
