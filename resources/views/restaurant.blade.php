@@ -110,7 +110,7 @@
 			$("#reviews").hide();
 			$("#error-text").hide();
 			$('#make-review').click(() => {
-				window.location = '/new/review?restuarant=' + encodeURIComponent(restaurant);
+				window.location = '/new/review?restaurant=' + encodeURIComponent(restaurant);
 			});
 			$.ajax({
 				url: '/api/reviews?restaurant=' +

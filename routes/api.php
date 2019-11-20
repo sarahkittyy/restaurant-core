@@ -109,7 +109,7 @@ Route::get('/reviews', function (Request $request) {
 			return response()->json([
 				'success' => false,
 				'response' => $restaurant_name.' not found.',
-			]);
+			], 400);
 		}
 		else
 		{
@@ -175,6 +175,11 @@ Route::get('/averageReview', function (Request $request) {
 	foreach ($reviews as $review)
 	{
 		$sum += $review->rating;
+	}
+	
+	if($count == 0)
+	{
+		$count == 1;
 	}
 	
 	return response()->json([
