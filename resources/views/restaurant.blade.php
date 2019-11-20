@@ -103,17 +103,15 @@
 	</style>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script>
-		function toReview(restaurant)
-		{
-			console.log(restaurant);
-			window.location = '/new/review?restaurant=' + encodeURIComponent(restaurant);
-		}
 		$(() => {
 			// A lil hacky, but it works
 			let restaurant = $('h2.title').html();
 
 			$("#reviews").hide();
 			$("#error-text").hide();
+			$('#make-review').click(() => {
+				window.location = '/new/review?restuarant=' + encodeURIComponent(restaurant);
+			});
 			$.ajax({
 				url: '/api/reviews?restaurant=' +
 						encodeURIComponent(restaurant) + '&' + 
@@ -175,12 +173,12 @@
 	<div class="full-width underline content bottom-pad">
 		<img src={{$restaurant->image}} class="img-bound" />
 		<div class="half-width">
-			<h2 class="title">{{$restaurant->name}}</h2>
+			<h2 class="title" id="restaurant-name">{{$restaurant->name}}</h2>
 			<h4 class="location">{{$restaurant->address}}</h4>
 		</div>
 		<p id="average-review" class="average-review"></p>
 		<button class="generic-button iblock"
-				onclick="toReview('{{$restaurant->name}}')">New Review</button>
+				id="make-review">New Review</button>
 		<button class="generic-button iblock"
 				onclick="window.location = '/'">Home</button>
 	</div>
